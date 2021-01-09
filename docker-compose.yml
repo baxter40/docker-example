@@ -1,24 +1,39 @@
+# Docker compose version
 version: '3.6'
 
+# Register the services
 services:
   api:
+    # Imagine name, links to docker hub repository with version tag
     image: baxter40/exampleapi:1.1
+    # Context to build and location of DockerFile
     build:
       context: .
       dockerfile: ./API/Dockerfile
+    #Container name
     container_name: example-dotnet-api
+    #Ports to map
     ports:
       - "30425:80"
+    #Environment variables
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
+    # Volumes
     volumes:
-      - /var/lib/Database/ExampleDocker/Prod/:/Database/
+      - databasevolume:/Database/
   frontend:
+    # Imagine name, links to docker hub repository with version tag
     image: baxter40/examplefrontend:1.1
+    # Context to build and location of DockerFile
     build:
       context: .
       dockerfile: ./FrontEnd/Dockerfile
+    #Container name
     container_name: example-angular-ui
+    #Ports to map
     ports:
       - "4301:80"
+# Register volumes
+volumes:
+  databasevolume:
