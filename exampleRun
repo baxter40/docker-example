@@ -1,0 +1,66 @@
+#!/bin/bash
+
+function dev-build {
+	echo -e "Building dev environment \n"
+  docker-compose -f "docker-compose.debug.yml" build --parallel
+}
+
+function dev-up {
+  echo -e "Loading dev environment \n"
+	docker-compose -f "docker-compose.debug.yml" up
+}
+
+function prod-build {
+  echo -e "Building production environment \n"
+  docker-compose build --parallel
+}
+
+function prod-up {
+  echo -e "Loading production environment \n"
+  docker-compose up
+}
+
+case $1 in
+
+	dev-build)
+		dev-build
+		;;
+
+	dev-up)
+    dev-up
+    ;;
+
+  dev-bu)
+    dev-build
+    dev-up
+    ;;
+
+	prod-build)
+		prod-build
+    ;;
+
+  prod-up)
+    prod-up
+    ;;
+
+  prod-bu)
+    prod-build
+    prod-up
+    ;;
+
+	prod-push)
+		echo -n "Have you tagged this release? y|n "
+		read TAGGED
+
+		if [[ $TAGGED -eq "y" ]]
+		then
+			echo -e "Deploying production \n"
+			docker-compose push
+		else
+			echo -n "Cancelling"
+		fi
+                ;;
+	shortlist)
+		echo dev-build dev-up prod-build prod-up prod-push shortlist
+		;;
+esac

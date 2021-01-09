@@ -1,0 +1,25 @@
+<mat-card class="flex">
+  <mat-card-header>
+    <mat-card-title>Users</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="!loading" class="scrollable">
+      <div *ngIf="users.length > 0">
+        <mat-list *ngFor="let user of users">
+          <div mat-subheader>
+            <mat-icon mat-list-icon>account_circle</mat-icon>
+            {{user.firstName}} {{user.lastName}}
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="loadUsers()">Refresh</button>
+  </mat-card-actions>
+</mat-card>
+

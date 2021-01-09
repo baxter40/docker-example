@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://dotnet-api:30325",
+    "secure": false
+  }
+}

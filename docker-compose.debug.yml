@@ -1,0 +1,29 @@
+version: '3.6'
+
+services:
+  api:
+    image: exampleapi
+    build:
+      context: .
+      dockerfile: ./API/Dockerfile
+    container_name: example-dotnet-api
+    ports:
+      - "30425:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    volumes:
+      - /var/lib/Database/ExampleDocker/Debug/:/Database/
+  frontend:
+    image: examplefrontend
+    build:
+      context: .
+      dockerfile: ./FrontEnd/DockerfileDev
+    container_name: example-angular-ui
+    volumes:
+      - ./FrontEnd/:/app/
+    environment:
+      - NODE_ENV=dev
+    ports:
+      - "4301:4301"
+      - "49153:49153"

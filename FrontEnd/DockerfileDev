@@ -1,0 +1,14 @@
+FROM node:14.2.0-alpine
+
+WORKDIR /app
+
+COPY ./FrontEnd/package*.json ./
+
+RUN npm i -g @angular/cli@11.0.3
+RUN npm i
+
+COPY ./FrontEnd/ ./
+
+EXPOSE 4301 49153
+
+CMD ["npm", "run", "start-dev"]
